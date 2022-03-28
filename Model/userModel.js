@@ -1,18 +1,19 @@
 const mongoose = require("mongoose");
+const autoIncrement = require("mongoose-auto-increment");
+
+autoIncrement.initialize(mongoose.connection);
 
 // model
 const UserModel = mongoose.model(
   "users",
   new mongoose.Schema({
-    userName: {
+    name: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
-    displayName: {
+    img: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
@@ -29,12 +30,7 @@ const UserModel = mongoose.model(
     dob: {
       type: Date,
     },
-    gender: {
-      type: String,
-      required: true,
-      uppercase: true,
-      enum: ["MALE", "FEMALE", "OTHERS"],
-    },
+
     password: {
       type: String,
       required: true,
@@ -42,50 +38,17 @@ const UserModel = mongoose.model(
     },
     role: {
       type: String,
-      required: true,
-      enum: ["admin", "user", "seller"],
     },
-    addresses: [
-      {
-        type: new mongoose.Schema({
-          name: {
-            type: String,
-            required: true,
-          },
-          phone: {
-            type: Number,
-            required: true,
-            min: 0000000001,
-            max: 9999999999,
-          },
-          address: {
-            type: String,
-            required: true,
-          },
-
-          pincode: {
-            type: Number,
-            required: true,
-            match: /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/,
-          },
-          town: {
-            type: String,
-            required: true,
-          },
-          city: {
-            type: String,
-            required: true,
-          },
-          state: {
-            type: String,
-            required: true,
-          },
-        }),
-      },
-    ],
-    activeStatus: {
+    approved: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    createdOn: {
+      type: Date,
+      default: new Date(),
+    },
+    modifiedOn: {
+      type: Date,
     },
   })
 );
