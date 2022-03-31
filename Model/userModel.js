@@ -39,7 +39,7 @@ const UserModel = mongoose.model(
     role: {
       type: String,
     },
-    approved: {
+    status: {
       type: Boolean,
       default: false,
     },

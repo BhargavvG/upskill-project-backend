@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRouter = require("./Router/user");
+const tweetRouter = require("./Router/tweet");
 
 dotenv.config();
 mongoose
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use(express.json());
 app.use("/user", userRouter);
+app.use("/tweet", tweetRouter);
 
 const port = process.env.PORT || process.env.PORT + 1 || 8080;
 app.listen(port, () => {

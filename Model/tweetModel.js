@@ -16,6 +16,9 @@ const TweetModel = mongoose.model(
       type: String,
       ref: "users",
     },
+    likes: {
+      type: Array,
+    },
   }).plugin(autoIncrement.plugin, {
     model: "tweets",
     field: "tweetId",
