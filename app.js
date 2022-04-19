@@ -28,8 +28,12 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/tweet", tweetRouter);
 
-const port = process.env.PORT || process.env.PORT + 1 || 8080;
-app.listen(port, () => {
-  console.log(`server is runing on port ${port} ...`);
-});
+const port = process.env.PORT || 8080;
+try {
+  app.listen(port, () => {
+    console.log(`server is runing on port ${port} ...`);
+  });
+} catch (err) {
+  console.log(err);
+}
 module.exports = app;

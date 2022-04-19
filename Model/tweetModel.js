@@ -19,6 +19,20 @@ const TweetModel = mongoose.model(
     likes: {
       type: Array,
     },
+    createdOn: {
+      type: Date,
+      default: new Date(),
+    },
+    modifiedOn: {
+      type: Date,
+    },
+    channels: {
+      type: Array,
+    },
+    status: {
+      type: Boolean,
+      default: false,
+    },
   }).plugin(autoIncrement.plugin, {
     model: "tweets",
     field: "tweetId",
