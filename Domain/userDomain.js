@@ -19,8 +19,9 @@ module.exports = class UserDomain {
         if (user.length == 0) {
           res.status(404).send("Login Failed!! User not found");
         } else {
-          let token = jwt.sign(user, process.env.secretKey, {
+          let token = jwt.sign(user, process.env.SECRETKEY, {
             expiresIn: "15d",
+            algorithm: process.env.ALGORITHM,
           });
           res.status(200).json({
             message: "login successful",
@@ -44,17 +45,14 @@ module.exports = class UserDomain {
 
       let userdata = req.body;
       userdata.password = hashedPassword;
+      userdata.role = "user";
       const user = new UserModel(userdata);
 
       await user.save();
 
       res.send("User Added");
     } catch (err) {
-      if (err.code == 11000) {
-        res.status(209).send("Id already exists");
-      } else {
-        res.status(208).send(err.message);
-      }
+      res.status(208).send(err.message);
     }
   }
 
@@ -84,14 +82,14 @@ module.exports = class UserDomain {
   async updateUser(req, res) {
     const id = req.decoded.id;
     try {
-        const {password, role, status,createdOn, ...data} = req.body
+      const { password, role, status, createdOn, ...data } = req.body;
       const result = await UserModel.updateOne(
         { id: id },
         {
           $set: data,
         }
       );
-      console.log(result)
+      console.log(result);
       if (result.acknowledge == 0) {
         res.send("User not found");
       } else {
@@ -101,7 +99,7 @@ module.exports = class UserDomain {
       res.status(500).send(err.message);
     }
   }
- 
+
   // delete user
   async deleteUser(req, res) {
     const id = req.params.id;
@@ -149,7 +147,6 @@ module.exports = class UserDomain {
     let result = await user.save();
     res.send("Password updated successfully");
   }
-
 };
 
 // module.exports = UserDomain;

@@ -30,6 +30,9 @@ const UserModel = mongoose.model(
     dob: {
       type: Date,
     },
+    channels: {
+      type: Array,
+    },
 
     password: {
       type: String,
@@ -38,6 +41,7 @@ const UserModel = mongoose.model(
     },
     role: {
       type: String,
+      enum: ["admin", "user"],
     },
     status: {
       type: Boolean,
@@ -50,6 +54,10 @@ const UserModel = mongoose.model(
     modifiedOn: {
       type: Date,
     },
+  }).plugin(autoIncrement.plugin, {
+    model: "users",
+    field: "id",
+    startAt: 100,
   })
 );
 

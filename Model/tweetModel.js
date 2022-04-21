@@ -35,7 +35,7 @@ const TweetModel = mongoose.model(
     },
   }).plugin(autoIncrement.plugin, {
     model: "tweets",
-    field: "tweetId",
+    field: "id",
     startAt: 10000,
   })
 );
