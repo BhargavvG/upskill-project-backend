@@ -15,6 +15,9 @@ const ChannelModel = mongoose.model(
       type: Date,
       default: new Date(),
     },
+    url: {
+      type: String,
+    },
   }).plugin(autoIncrement.plugin, {
     model: "channels",
     field: "id",

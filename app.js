@@ -5,6 +5,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRouter = require("./Router/user");
 const tweetRouter = require("./Router/tweet");
+const channelRouter = require("./Router/channel");
+const loginMiddleware = require("./middleware/login");
+const authAdmin = require("./Auth/adminAccess");
 
 dotenv.config();
 mongoose
@@ -26,6 +29,8 @@ app.get("/", (req, res) => {
 });
 app.use(express.json());
 app.use("/user", userRouter);
+app.use("/channel", channelRouter);
+app.use(loginMiddleware);
 app.use("/tweet", tweetRouter);
 
 const port = process.env.PORT || 8080;

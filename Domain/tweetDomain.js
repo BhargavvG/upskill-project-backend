@@ -3,7 +3,22 @@ const TweetModel = require("../Model/tweetModel");
 module.exports = class TweetDomain {
   async getAllTweets(req, res) {
     try {
-      let tweets = await TweetModel.find();
+      let tweets = await TweetModel.aggregate([
+        {
+          $lookup: {
+            from: "users",
+            localField: "user",
+            foreignField: "id",
+            as: "user",
+          },
+        },
+        { $unwind: "$user" },
+        {
+          $project: {
+            "user.password": false,
+          },
+        },
+      ]);
       res.send(tweets);
     } catch (err) {
       res.status(500).send(err.message);
@@ -19,6 +34,7 @@ module.exports = class TweetDomain {
         res.status(204).send("No Such Tweet");
       }
     } catch (err) {
+      console.log(err.message);
       res.status(500).send(err.message);
     }
   }
@@ -57,6 +73,29 @@ module.exports = class TweetDomain {
       } else {
         res.send("Didn't find such tweet");
       }
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+  async likeTweet(req, res) {
+    try {
+      let tweet = await TweetModel.findOne({ id: req.params.id });
+      let likes = tweet.likes;
+      console.log(likes);
+      console.log(req.decoded.id);
+      if (tweet.likes.includes(req.decoded.id)) {
+        likes = tweet.likes.filter((x) => x !== req.decoded.id);
+      } else {
+        likes.push(req.decoded.id);
+      }
+      let result = await TweetModel.updateOne(
+        { id: req.params.id },
+        { $set: { likes: likes } }
+      );
+      console.log(result);
+      if (result.acknowledged) {
+        res.status(200).send("Liked");
+      } else res.status(204).send("something went wrong");
     } catch (err) {
       res.status(500).send(err.message);
     }

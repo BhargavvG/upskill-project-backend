@@ -13,7 +13,7 @@ const TweetModel = mongoose.model(
       trim: true,
     },
     user: {
-      type: String,
+      type: Number,
       ref: "users",
     },
     likes: {
@@ -36,7 +36,7 @@ const TweetModel = mongoose.model(
   }).plugin(autoIncrement.plugin, {
     model: "tweets",
     field: "id",
-    startAt: 10000,
+    startAt: 10005,
   })
 );
 
