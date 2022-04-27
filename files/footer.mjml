@@ -1,0 +1,28 @@
+<mj-wrapper mj-class="footer__wrapper">
+    <mj-section mj-class="footer__section footer__section--marketing">
+      <mj-column mj-class="footer__column footer__column--marketing">
+        <mj-image width="50px" src="[onshow;imageUrl='[USER_LESS_ROOT]img/autoreply_footer.png';onformat=~view.formatEmbedImage;noerr;magnet=mj-image]" />
+        <mj-text mj-class="footer__text footer__text--marketing">
+          <p class="footer-marketing-text__p footer-marketing-text__p--title">
+            [hotel.info.marketing.title;noerr;magnet=p]
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section mj-class="footer__section footer__section--address">
+      <mj-column mj-class="footer__column footer__column--address footer__column--place">
+        <mj-text mj-class="footer__text footer__text--address footer__text--place">
+          <p class="footer__p footer__p--contact">
+            <strong>[hotel.contact.firstname]</strong><span>, [hotel.contact.lastname;magnet=span]</span>
+          </p>
+          <p class="footer__p footer__p--place">
+            [hotel.contact.streetno;noerr;]<span>, [hotel.contact.city] [hotel.contact.zip]</span><span> - [hotel.contact.state;magnet=span;noerr;]</span><span>, [hotel.contact.country.name;magnet=span;noerr;]</span>
+          </p>
+          <p class="footer__p footer__p--phone">[hotel.contact.phone;magnet=p;noerr;]</p>
+          <p class="footer__p footer__p--email">
+            <a class="footer__a footer__a--email" href="[hotel.contact.email]" target="_blank">[hotel.contact.email;magnet=p;noerr;]</a>
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-wrapper>

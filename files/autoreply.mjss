@@ -1,0 +1,86 @@
+//fonts for mjml emails
+.fonts-mjss() {
+  .georgia__font {
+    name: "Georgia";
+    href: "[SMTS_USER_URL]fonts/georgia.css";
+  }
+
+  .opensans-regular__font {
+    name: "OpenSans";
+    href: "[SMTS_USER_URL]fonts/opensans-regular.css";
+  }
+}
+
+
+@autoreply-font-family-headings: 'Georgia', serif;
+@autoreply-font-family-text: 'OpenSans', sans-serif;
+@autoreply-background-color: #f4f7f4;
+
+@booking-background: #c9252b;
+@title-color: #c9252b;
+
+@autoreply-base-font-size: 12px; // base font size
+@autoreply-offers-font-size: 12px; // dd or dl font size
+@autoreply-text-line-height: 1.5; // ovrall line height
+@autoreply-summary-font-size: 12px; //summary font size
+
+@autoreply-title-font-size: 22px; //offer title font size
+@autoreply-title-text-transform: capitalize;
+@autoreply-rateplan-title-font-size: 16px; // rate plan title font size
+
+@autoreply-title-font-weight: 400; // title or medium font weight
+@autoreply-base-font-weight: 400; // Regular body font weight
+@autoreply-bold-font-weight: 600; // For Guestnote text and price text bold fonts
+
+@autoreply-base-letter-spacing: 0px;
+
+@autoreply-base-text-color: #333333; // body text color
+@autoreply-base-letter-spacing: 0px;
+@autoreply-title-text-color: @title-color; // Title text color
+@autoreply-notice-text-color: #333333; // notice text color
+@autoreply-rateplan-text-color: #333333; // rate plan text color
+@autoreply-footer-text-color: #333333; // footer text color
+
+/* Button variables */
+@autoreply-button-font-size: 16px; // booking button font size
+@autoreply-button-background: @booking-background; // booking button background color
+@autoreply-offer-button-background: #c9252b; // offer button background color
+@autoreply-button-font-weight: 700; // booking button font weight
+@autoreply-button-text-transform: uppercase;
+
+.smts-enquiry-autoreply-mjss() {
+  .room-head__p--title {
+    line-height: 1.3;
+    padding-left: 45px;
+  }
+
+  .room-head__span--number {
+    line-height: 0.7;
+  }
+  .summary__p--title{
+    font-size:16px;
+    font-weight:500;
+  }
+
+}
+
+@media (max-width:576px) {
+  @autoreply-title-font-size : 16px;
+
+  .room-head__p--title {
+    font-size: @autoreply-title-font-size;
+  }
+
+  .footer-marketing-text__p--title {
+    font-size: @autoreply-title-font-size;
+  }
+
+  .offer-head__span--room-title {
+    font-size: @autoreply-title-font-size;
+  }
+
+  .room-head__p--subtitle {
+    font-size: @autoreply-title-font-size;
+  }
+
+}

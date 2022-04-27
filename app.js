@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const userRouter = require("./Router/user");
 const tweetRouter = require("./Router/tweet");
 const channelRouter = require("./Router/channel");
+const MailRouter = require("./Router/mailer");
 const loginMiddleware = require("./middleware/login");
 const authAdmin = require("./Auth/adminAccess");
 
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 app.use(express.json());
 app.use("/user", userRouter);
 app.use("/channel", channelRouter);
+app.use("/mail", MailRouter);
 app.use(loginMiddleware);
 app.use("/tweet", tweetRouter);
 

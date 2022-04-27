@@ -1,0 +1,568 @@
+<mjml lang="[onload.language]">
+  <mj-head>
+    [onload;onformat=~view.formatAutoReplyHead;subtpl]
+  </mj-head>
+  <mj-body mj-class="main__body">
+    <mj-wrapper mj-class="header__wrapper">
+      [onload;onformat=~view.formatAutoReplyHeader;subtpl]
+
+      <mj-section mj-class="guestnote__section">
+        <mj-column mj-class="guestnote__column">
+          <mj-text mj-class="guestnote__text">[onshow;block=mj-text;when '[enquiry.no_availability;ifempty=0;noerr]'='0']
+            <p class="guestnote__p guestnote__p--title">{{_hello:Sehr geehrte/r <strong class="guestnote-name__strong">[enquiry.salutation] [enquiry.lastname]</strong>,}}</p>
+            <p class="guestnote__p guestnote__p--intro">{{_intro:Basierend auf Ihrer Anfrage haben wir Ihnen folgende<strong class="guestnote-name__strong"> Urlaubsangebote im [hotel.contact.name]</strong> zusammengestellt. Wir hoffen, es ist das für Sie passende dabei und freuen uns, Sie bald bei uns begrüßen zu dürfen!}}</p>
+            <p class="guestnote__p guestnote__p--outro">{{_outro:Freundliche Grüße,<br>[CLIENT_NAME]}}</p>
+          </mj-text>
+          <mj-text mj-class="guestnote__text">[onshow;block=mj-text;when '[enquiry.no_availability;ifempty=0;noerr]'='1']
+            <p class="guestnote__p guestnote__p--title">{{_no_availability_hello: Sehr geehrte/r <strong class="guestnote-name__strong">[enquiry.salutation] [enquiry.lastname]</strong>,}}</p>
+            <p class="guestnote__p guestnote__p--intro">{{_no_availability_intro: Leider sind wir für die gewählten Zeiträume, Zimmer und Kategorien vollständig ausgebucht.}}</p>
+            <p class="guestnote__p guestnote__p--outro">{{_no_availability_outro: Freundliche Grüße,<br>[CLIENT_NAME]}}</p>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <!-- START:: Summary Section -->
+      <mj-section mj-class="summary__section">
+        <mj-column mj-class="summary__column summary__column--title">
+          <mj-text mj-class="summary__text summary__text--title">
+            <h5 class="summary__h5 summary__h5--title">{{_summary.title:Zusammenfassung Ihrer Anfrage}}</h5>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section mj-class="summary__section summary__section--text">
+        <mj-column mj-class="summary__column">
+          <mj-table mj-class="summary__table">
+            <tr class="summary__tr summary__tr--[summary_count;ifempty='odd' ;noerr;]">
+              <!-- Period -->
+              <td class="summary__td summary__td--period">
+                <div class="summary__div summary__div--title">
+                  <div class="summary__div summary__div--period">
+                    <p class="summary-title__p summary-title__p--period">
+                      <span class="summary-icon__span summary-icon__span--period">
+                        <img class="summary-icon__img summary-icon__img--period" width="28" height="16" style="width:28px;height:16px;" alt="icon-period" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=check-in]" />
+                      </span>
+                      <span class="summary-title__span summary-title__span--period">
+                        {{_summary.title.period:Zeitraum}} :
+                        <span class="summary-title__span summary-title__span--period">
+                          [enquiry.period.0.arrival;onformat=~view.formatDate;format={{_dateformat:d.m.Y}}] -
+                          [enquiry.period.0.departure;onformat=~view.formatDate;format={{_dateformat:d.m.Y}}]<br>
+                          ([enquiry.period.0.arrival;noerr;onformat=~view.formatdateToDay;] - [enquiry.period.0.departure;noerr;onformat=~view.formatdateToDay])
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="summary__div summary__div--sub-period">
+                    <p class="summary-title__p summary-title__p--period">
+                      <span class="summary-icon__span summary-icon__span--period">
+                      </span>
+                      <span class="summary-title__span summary-title__span--sub-period">{{_summary.title.altperiod:Alternativer Zeitraum}} :
+                        <span>
+                          [enquiry.period.1.arrival;onformat=~view.formatDate;format={{_dateformat:d.m.Y}};noerr;magnet=div] -
+                          [enquiry.period.1.departure;onformat=~view.formatDate;format={{_dateformat:d.m.Y}};noerr]<br>
+                          ([enquiry.period.1.arrival;noerr;onformat=~view.formatdateToDay;] - [enquiry.period.1.departure;noerr;onformat=~view.formatdateToDay])
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <!-- Stay -->
+              <td class="summary__td summary__td--stay summary__td--[summary_count;ifempty='odd' ;noerr;]">
+                <div class="summary__div summary__div--title">
+                  <div class="summary__div summary__div--stay">
+                    <p class="summary-title__p summary-title__p--stay">
+                      <span class="summary-icon__span summary-icon__span--stay">
+                        <img class="summary-icon__img summary-icon__img--stay" width="28" height="16" alt="icon-stay" style="width:28px;height:16px;" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=summary-stay]" />
+                      </span>
+                      <span class="summary-title__span summary-title__span--stay">{{_summary.title.stay:Aufenthalt}} :
+                        <span class="summary-title__span summary-title__span--stay">
+                          [enquiry.period.0.nights;if [val]=1;then '[val] {{_night:Nacht}}';else '[val] {{_nights:Nächte}}';noerr]
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="summary__div summary__div--alt--stay">[onshow;block=div;when '[enquiry.period.1.nights;ifempty=0;noerr]'!='0']
+                    <p class="summary-title__p summary-title__p--stay">
+                      <span class="summary-icon__span summary-icon__span--stay">
+                      </span>
+                      <span class="summary-title__span summary-title__span--alt--stay">{{_summary.title.altstay:Alternativer Aufenthalt}} :
+                        <span class="summary-title__span summary-title__span--stay">
+                          [enquiry.period.1.nights;if [val]=1;then '[val] {{_night:Nacht}}';else '[val] {{_nights:Nächte}}';noerr;]
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="summary__tr summary__tr--[summary_count;ifempty='odd' ;noerr;]">
+              <!--guests-->
+              <td class="summary__td summary__td--[summary_count;ifempty='odd' ;noerr;]">
+                <div class="summary__div summary__div--guests">
+                  <p class="summary-title__p summary-title__p--guests">
+                    <span class="summary-icon__span summary-icon__span--guests">
+                      <img class="summary-icon__img summary-icon__img--guests" width="28" height="13" alt="icon-guests" style="width:28px;height:13px;" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=summary-guests]" />
+                    </span>
+                    <span class="summary-title__span summary-title__span--guests">{{_summary.title.guests:Gäste}} :
+                      <span class="summary-text__span summary-text__span--adults">{{_summary.guests.adults:Erwachsene:}} [enquiry.adults;noerr;magnet=span]</span><span class="summary-text__span summary-text__span--children">, [enquiry.children;if [val]+-0;then '{{_summary.guests.children:Kinder:}} [val]';else '';noerr;magnet=span]</span>
+                      <span class="summary-text__span summary-text__span--children-age">[enquiry.childage;if [val]!='';then '{{_summary.guests.childage: (Alter: [val])}}';else '';noerr;magnet=span]</span><span class="summary-text__span summary-text__span--dogs">, [enquiry.dogs;if [val]+=-1;then '{{_summary.guests.dogs:Hunde:}} [val]';else '';noerr;magnet=span]</span>
+                    </span>
+                  </p>
+                </div>
+              </td>
+              <!--room-->
+              <td class="summary__td summary__td--[summary_count;ifempty='odd' ;noerr;]">
+                <div class="summary__div summary__div--room">
+                  <p class="summary-title__p summary-title__p--room">
+                    <span class="summary-icon__span summary-icon__span--room">
+                      <img class="summary-icon__img summary-icon__img--room" width="26" height="19" alt="icon-room" style="width:26px;height:19px;" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=summary-room]" />
+                    </span>
+                    <span class="summary-title__span summary-title__span--room">[enquiry.room.0.type.name;noerr] :
+                      [enquiry.room.0.title;noerr;magnet=td]
+                    </span>
+                  </p>
+                </div>
+              </td>
+            </tr>
+            <tr class="summary__tr summary__tr--[summary_count;ifempty='odd' ;noerr;]">
+              <!--mealplan-->
+              <td class="summary__td summary__td--[summary_count;ifempty='odd' ;noerr;]">
+                <div class="summary__div summary__div--room">
+                  <p class="summary-title__p summary-title__p--mealplan">
+                    <span class="summary-icon__span summary-icon__span--mealplan">
+                      <img class="summary-icon__img summary-icon__img--mealplan" width="28" height="17" alt="icon-mealplan" style="width:28px;height:17px;" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=summary-mealplan]" />
+                    </span>
+                    <span class="summary-title__span summary-title__span--mealplan">{{_summary.title.mealplan:Verpflegung}} :</span>
+                    [enquiry.mealplan.title;noerr;magnet=td]
+                  </p>
+                </div>
+              </td>
+              <!--offer-->
+              <td class="summary__td summary__td--[summary_count;ifempty='odd' ;noerr;]">
+                <div class="summary__div summary__div--offer">
+                  <p class="summary-title__p summary-title__p--offer">
+                    <span class="summary-icon__span summary-icon__span--offer">
+                      <img class="summary-icon__img summary-icon__img--offer" width="28" height="19" alt="icon-offer" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=summary-offer]" />
+                    </span>
+                    <span class="summary-title__span summary-title__span--offer">{{_summary.title.offer:Angebot}} :
+                      <span>
+                        [enquiry.offer.title;noerr;magnet=td]
+                      </span>
+                    </span>
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </mj-table>
+        </mj-column>
+      </mj-section>
+
+      <!-- END:: Summary Section -->
+    </mj-wrapper>
+    [rooms;block=begin]
+    <!-- Additional text Message box -->
+    <mj-section mj-class="alternatives__section alternatives__section--match">[onshow;block=mj-section;when '[rooms.no_message;ifempty=0;noerr][rooms.#]'=='01']
+      <mj-column mj-class="alternatives__column">
+        <mj-text mj-class="alternatives__text alternatives__text--match">
+          <p>{{_notice:Ihre Anfrage hat <span class="alternatives__span--red">keinen eindeutigen Treffer</span> ergeben hat, bieten wir Ihnen ein Alternativangebot.}}</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- START:: Steps Titles -->
+    <mj-section mj-class="room-head__section">
+      <mj-column mj-class="room-head__column room-head__column--title">
+        <mj-text mj-class="room-head__column room-head__text--title">[onshow;block=mj-text;when '[rooms.isSingledate;ifempty=0;noerr]'=='1']
+          <!-- Selected Room is available for selected date -->
+          <table class="room-head__table--num">
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.no_message;ifempty=0;noerr]'=='1']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.available_date:Best-Price Angebot für Ihren gewünschten Zeitraum:}}</h3>
+              </td>
+            </tr>
+
+            <!-- Selected Room is not available for selected date -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='01']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.room:Angebot für ein alternative Kategorie im gewünschten Zeitraum:}}</h3>
+              </td>
+            </tr>
+            <!-- When we are showing next availability of the selected room -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='10']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.date:Best-Price Angebot für die gewählte Kategorie im nächsten verfügbaren Zeitraum:}}</h3>
+              </td>
+            </tr>
+            <!-- When we are showing next availability of the closest alt room -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;noerr][rooms.isAlternativeRoom;noerr]'='11']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.date_room:Best-Price Angebot für eine alternative Kategorie im nächsten verfügbaren Zeitraum:}}</h3>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+        <mj-text mj-class="room-head__column room-head__text--title">[onshow;block=mj-text;when '[rooms.isSingledate;ifempty=0;noerr]'=='0']
+          <!-- Selected room is available for the 1st date -->
+          <table class="room-head__table">
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.no_message;ifempty=0;noerr]'=='1']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.available_altdate:Best-Price Angebot für Ihren gewünschten Zeitraum:}}</h3>
+              </td>
+            </tr>
+            <!-- Selected room is not available for the 1st date -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='01']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.altroom_date:Angebot für ein alternative Kategorie im gewünschten Zeitraum:}}</h3>
+              </td>
+            </tr>
+            <!-- Selected and alt room is not available for 1st date -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='20']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.selroom_altdate:Angebot für einen alternativen Zeitraum in der gewünschten Kategorie:}}</h3>
+              </td>
+            </tr>
+            <!-- If selceted room is not available for 2nd date -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='21']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.altroom_altdate:Angebot für eine andere Kategorie im alternativen Zeitraum:}}</h3>
+              </td>
+            </tr>
+
+            <!-- When we are showing next availability of the selected room -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr][rooms.isNextAvailability;ifempty=0;noerr]'='101']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3"> {{_steps.next_selroom:Angebot für die gewünschte Kategorie im nächsten verfügbaren Zeitraum:}}
+                </h3>
+              </td>
+            </tr>
+
+            <!-- When we are showing next availability of the closest alt room -->
+            <tr class="room-head__tr--title">[onshow;block=tr;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr][rooms.isNextAvailability;ifempty=0;noerr]'='111']
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=1]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step1]" />
+              </td>
+              <td class="room-head__td--number">[onshow;block=td;when [rooms.#]=2]
+                <img class="room-head__img--step" width="40" height="40" alt="icon-number" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=step2]" />
+              </td>
+              <td class="room-head__td--title">
+                <h3 class="room-head__h3">{{_steps.next_altroom:Angebot für eine andere Kategorie im nächsten verfügbaren Zeitraum:}}</h3>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- END:: Steps Title -->
+
+    <!-- Messages when 1 date is selected -->
+    <mj-section mj-class="alternatives__section">[onshow;block=mj-section;when '[rooms.isSingledate;ifempty=0;noerr][rooms.no_message;ifempty=0;noerr]'=='10']
+      <mj-column mj-class="alternatives__column">[onshow;block=mj-column;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'!='00']
+        <!-- When we are showing next availability of the closest alt room -->
+        <mj-text mj-class="alternatives__text alternatives__text--date-and-room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;noerr][rooms.isAlternativeRoom;noerr]'='11']
+          <p class="alternatives__p">
+            {{_alternatives.date_room:[enquiry.room.0.title] ist vollständig ausgebucht. Alternativ wäre [rooms.title] vom
+              [rooms.alternativeDate.arrival;noerr;onformat=~view.formatDate] - [rooms.alternativeDate.departure;noerr;onformat=~view.formatDate] 
+              <span class="alternatives__span--night">([rooms.alternativeDate.nights;noerr] Nächte , [rooms.alternativeDate.arrival;noerr;onformat=~view.formatdateToDay;]-[rooms.alternativeDate.departure;noerr;onformat=~view.formatdateToDay])</span>
+              für Sie frei. Sie können [rooms.title] für diesen Zeitraum hier direkt buchen.}}
+          </p>
+        </mj-text>
+        <!-- When we are showing next availability of the selected room -->
+        <mj-text mj-class="alternatives__text alternatives__text--date">[onshow;block=mj-text;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='10']
+          <p class="alternatives__p">
+            {{_alternatives.date:[enquiry.room.0.title] ist zum angefragten Zeitraum nicht verfügbar. Der nächste freie Zeitraum für [enquiry.room.0.title] ist vom
+              [rooms.alternativeDate.arrival;noerr;onformat=~view.formatDate] - [rooms.alternativeDate.departure;noerr;onformat=~view.formatDate] 
+              <span class="alternatives__span--night">([rooms.alternativeDate.nights;noerr] Nächte , [rooms.alternativeDate.arrival;noerr;onformat=~view.formatdateToDay;]-[rooms.alternativeDate.departure;noerr;onformat=~view.formatdateToDay]).</span>
+              Sie können [rooms.title] für diesen Zeitraum hier direkt buchen.}}
+          </p>
+        </mj-text>
+        <!-- When we are showing Alt room -->
+        <mj-text mj-class="alternatives__text alternatives__text--room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='01']
+          <p class="alternatives__p">
+            {{_alternatives.room:[enquiry.room.0.title] ist im angefragten Zeitraum vom [enquiry.period.0.arrival;onformat=~view.formatDate] - [enquiry.period.0.departure;onformat=~view.formatDate] 
+              <span class="alternatives__span--night">([enquiry.period.0.nights;noerr] Nächte , [enquiry.period.0.arrival;onformat=~view.formatdateToDay;]-[enquiry.period.0.departure;onformat=~view.formatdateToDay])</span> leider nicht verfügbar. Im selben 
+              Zeitraum wäre [rooms.title] noch für Sie frei. Sie können [rooms.title] hier direkt buchen.}}
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- Messages when 2 dates are selected -->
+    <mj-section mj-class="alternatives__section">[onshow;block=mj-section;when '[rooms.isSingledate;ifempty=0;noerr][rooms.no_message;ifempty=0;noerr]'=='00']
+      <mj-column mj-class="alternatives__column">[onshow;block=mj-column;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'!='00']
+        <!-- When we are showing Alt room for selected date -->
+        <mj-text mj-class="alternatives__text alternatives__text--date-and-room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='01']
+          <p class="alternatives__p">
+            <!-- <b>CASE 2: Alternative room with 1st date:</b><br> -->
+            {{_alternative.altroom_date:Leider ist [enquiry.room.0.title] im gewählten Zeitraum nicht mehr verfügbar. Für den gewählten Zeitraum   
+              [enquiry.period.0.arrival;noerr;onformat=~view.formatDate] - [enquiry.period.0.departure;noerr;onformat=~view.formatDate]
+              ([enquiry.period.0.nights;noerr] Nächte , [enquiry.period.0.arrival;onformat=~view.formatdateToDay;]-[enquiry.period.0.departure;onformat=~view.formatdateToDay]) 
+              bieten wir [rooms.title] an. Sie können dieses Angebot hier direkt buchen.}}
+          </p>
+        </mj-text>
+        <!-- When we are showing selected room for Alt date -->
+        <mj-text mj-class="alternatives__text alternatives__text--date-and-room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='20']
+          <p class="alternatives__p">
+            <!-- <b>CASE 1: Selected room with Alternative date:</b><br> -->
+            {{_alternative.selroom_altdate:Leider ist [enquiry.room.0.title] im gewünschten Zeitraum nicht mehr verfügbar. Alternativ bieten wir Ihnen 
+              [enquiry.room.0.title] vom [rooms.alternativeDate.arrival;noerr;onformat=~view.formatDate] - [rooms.alternativeDate.departure;noerr;onformat=~view.formatDate] 
+              ([rooms.alternativeDate.nights;noerr] Nächte , [rooms.alternativeDate.arrival;noerr;onformat=~view.formatdateToDay;]-[rooms.alternativeDate.departure;noerr;onformat=~view.formatdateToDay]) 
+              an. Sie können dieses Angebot hier direkt buchen.}}
+          </p>
+        </mj-text>
+        <!-- When we are showing Alt room for Alt date -->
+        <mj-text mj-class="alternatives__text alternatives__text--date-and-room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='21']
+          <p class="alternatives__p">
+            <!-- <b>CASE 3: Alternative room with 2nd date:</b><br> -->
+            {{_alternative.altroom_altdate:Leider ist [enquiry.room.0.title] im gewählten Zeitraum nicht mehr verfügbar. Für den alternativ gewählten Zeitraum 
+              [enquiry.period.1.arrival;noerr;onformat=~view.formatDate] - [enquiry.period.1.departure;noerr;onformat=~view.formatDate]
+              ([enquiry.period.1.nights;noerr] Nächte , [enquiry.period.1.arrival;noerr;onformat=~view.formatdateToDay;]-[enquiry.period.1.departure;noerr;onformat=~view.formatdateToDay]) 
+              bieten wir Ihnen [rooms.title] an. Sie können dieses Angebot hier direkt buchen.}}
+          </p>
+        </mj-text>
+        <!-- When we are showing next availability of the selected room -->
+        <mj-text mj-class="alternatives__text alternatives__text--date-and-room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr][rooms.isNextAvailability;ifempty=0;noerr]'='101']
+          <p class="alternatives__p">
+            {{_alternative.next_selroom:Leider ist [enquiry.room.0.title] im gewählten und auch im alternativen Zeiraum nicht mehr verfügbar. Für das gewählte Zimmer können wir den 
+              Zeitraum [rooms.alternativeDate.arrival;noerr;onformat=~view.formatDate] - [rooms.alternativeDate.departure;noerr;onformat=~view.formatDate] 
+              ([rooms.alternativeDate.nights;noerr] Nächte , [rooms.alternativeDate.arrival;noerr;onformat=~view.formatdateToDay;]-[rooms.alternativeDate.departure;noerr;onformat=~view.formatdateToDay])
+              anbieten. Sie können dieses Angebot hier direkt buchen.}}
+          </p>
+        </mj-text>
+        <!-- When we are showing next availability of the Alt room -->
+        <mj-text mj-class="alternatives__text alternatives__text--date-and-room">[onshow;block=mj-text;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr][rooms.isNextAvailability;ifempty=0;noerr]'='111']
+          <p class="alternatives__p">
+            {{_alternative.next_altroom:Leider ist [enquiry.room.0.title] im gewählten und auch im alternativen Zeiraum nicht mehr verfügbar. Als Alternative bieten wir 
+                [rooms.title] im Zeitraum [rooms.alternativeDate.arrival;noerr;onformat=~view.formatDate] - [rooms.alternativeDate.departure;noerr;onformat=~view.formatDate] 
+                ([rooms.alternativeDate.nights;noerr] Nächte , [rooms.alternativeDate.arrival;noerr;onformat=~view.formatdateToDay;]-[rooms.alternativeDate.departure;noerr;onformat=~view.formatdateToDay])
+                an. Sie können dieses Angebot hier direkt buchen.}}
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section mj-class="room-head__section">
+      <mj-column mj-class="room-head__column room-head__column--image">
+        <mj-image mj-class="room-head__image" src="[rooms.images.internal.0.url;onformat=~view.formatSeekdaImage;width=880;height=400;noerr;magnet=mj-column;data-uri]">
+      </mj-column>
+    </mj-section>
+    <mj-section mj-class="room-head__section">
+      <mj-column mj-class="room-head__column room-head__column--info">
+        <mj-table mj-class="room-head__table room-head__table--offers">
+          <tr class="room-head__tr room-head__tr--subtitle">
+            <td class="room-head__td--left room-head__td--subtitle">
+              <table>
+                <tr>
+                  <td class="room-head__td--sub">
+                    <img class="room-head__img room-head__img--period" width="30" height="24" alt="icon-periods" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=room]" />
+                  </td>
+                  <td class="room-head__td--sub-title">
+                    <p class="room-head__p--subtitle">
+                      [rooms.title]
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <!--.room-head__table-->
+            <td class="room-head__td--subtitle room-head__td--subtitle-right">
+              <table class="room-head__table--subtitle">
+                <tr>
+                  <td class="room-head__td--max">
+                    <span class="room-head__span room-head__span--guests">{{_room.info.max:Max.}} [rooms.occupancy.max;if [val]=1;then '[val] {{_room.info.person:Person}}';else '[val] {{_room.info.persons:Personen}}']</span>
+                  </td>
+                  <td class="room-head__td--size">
+                    <span class="room-head__span room-head__span--size">[rooms.size;magnet=td]</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="room-body__tr room-body__tr--details">
+            <td class="room-body__td" colspan="2">
+              <div class="room-description__div">
+                [rooms.description;strconv=no;onformat=~view.formatHtmlForMjml;bem=room-description;view=autoreply;iconFor=bullet;noerr;magnet=div]
+              </div>
+            </td>
+          </tr>
+        </mj-table>
+
+      </mj-column>
+    </mj-section>
+    <mj-section mj-class="room-detail__section">
+      <mj-column mj-class="room-detail__column">
+        <mj-text mj-class="room-description__text">
+          <p class="room-description__p room-description__p--title">
+            {{_room_amenities.title:Ausstattung}}
+          </p>
+          <p class="room-amenities__p">
+            <span class="room-amenities__span room-amenities__span--[rooms_amenities.$]">
+              [rooms_amenities.val;block=span;bmagnet=mj-text;p1=[rooms.$]],
+            </span>
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-wrapper mj-class="room-rateplan__wrapper">
+      <mj-section mj-class="room-rateplan__section">[rooms_rateplans;block=mj-section;p1=[rooms.$];ondata=~view.autoreplyRoomRateplansOnData]
+        <mj-column mj-class="room-rateplan__column--description">
+          <mj-table mj-class="room-rateplan__table">
+            <tr class="room-rateplan__tr">
+              <td class="room-rateplan__td">
+                <div class="room-rateplan__div">
+                  <p class="room-rateplan-title__p">[rooms_rateplans.title]</p>
+                  <div class="room-rateplan-description__div">
+                    <div class="room-rateplan-description-text__div">
+                      [rooms_rateplans.description;strconv=no;onformat=~view.formatHtmlForMjml;bem=room-rateplan-description;view=autoreply;iconFor=rateplan-description-list;noerr]
+                    </div>
+                    <dl class="room-rateplan-options__dl">
+                      <dd class="room-rateplan-options__dd room-rateplan-options__dd--mealplan">
+                        <img class="room-rateplan-options-icon__img room-rateplan-options-icon__img--mealplan" width="26" height="16" alt="icon-mealplans" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=rateplan-mealplan]" />[rooms_rateplans.extraInfo.mealPlan;noerr;magnet=dd]
+                      </dd>
+                      <dd class="room-rateplan-options__dd room-rateplan-options__dd--cancellation">
+                        <img class="room-rateplan-options-icon__img room-rateplan-options-icon__img--cancellation" width="26" height="16" alt="icon-cancellations" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=rateplan-cancellation]" />{{_rateplan.cancellation_until:Kostenlose Stornierung bis}} [rooms_rateplans.extraInfo.freeCancellationDeadline;onformat=~view.formatDate;magnet=dd]
+                      </dd>
+                      <dd class="room-rateplan-options__dd room-rateplan-options__dd--directbooking">
+                        <p class="room-rateplan-directbooking__p">
+                          <strong class="room-rateplan-directbooking__strong">{{_directbooking.title:Direktbuchervorteile - }}</strong>
+                          {{_directbooking.description:Buchen Sie direkt hier und sichern Sie sich damit folgende Vorteile:}}
+                        </p>
+                        <dl class="room-rateplan-directbooking__dl">
+                          <dd class="room-rateplan-directbooking__dd">
+                            <img class="room-rateplan-options-icon__img room-rateplan-options-icon__img--directbooking" width="26" height="16" alt="icon-directbooking" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=directbooking]" />[directbooking.val;block=dd;bmagnet=dd;p1]
+                          </dd>
+                        </dl>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </mj-table>
+        </mj-column>
+        <mj-column mj-class="room-rateplan__column--buttons">
+          <mj-text mj-class="room-rateplan-amount__text">
+            <p class="room-rateplan-amount__p">
+              <span class="room-rateplan-amount__span room-rateplan-amount__span--nights">[onshow;block=span;when '[rooms.isAlternativeDate;ifempty=0;noerr]'='0']
+                [enquiry.period.0.nights;if [val]=1;then '{{_period_night:1 Nacht}}';else '{{_period_nights:[val] Nächte}}']
+              </span>
+              <!-- START:: Display nights of Alternative date -->
+              <span class="room-rateplan-amount__span room-rateplan-amount__span--nights">[onshow;block=span;when '[rooms.isAlternativeDate;noerr]'='2']
+                [enquiry.period.1.nights;if [val]=1;then '{{_period_night:1 Nacht}}';else '{{_period_nights:[val] Nächte}}';noerr;]
+              </span>
+              <span class="room-rateplan-amount__span room-rateplan-amount__span--nights">[onshow;block=span;when '[rooms.isAlternativeDate;ifempty=0;noerr][rooms.isAlternativeRoom;ifempty=0;noerr]'='10']
+                [rooms.alternativeDate.nights;if [val]=1;then '{{_period_night:1 Nacht}}';else '{{_period_nights:[val] Nächte}}';noerr;]
+              </span>
+              <!-- END:: Display nights of Alternative date -->
+              <strong class="room-rateplan-amount__strong room-rateplan-amount__strong--price">
+                [rooms_rateplans.price;onformat=~view.formatPrice]
+              </strong>
+            </p>
+          </mj-text>
+          <mj-button mj-class="offer-rateplan__button" href="[rooms_rateplans.booking_url]">{{_room.rateplan.booknow:Jetzt buchen}}</mj-button>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+    [rooms_offers;block=begin;p1=[rooms.$];ondata=~view.autoreplyRoomOffersOnData]
+    <mj-section mj-class="offer-head__section">
+        <mj-column mj-class="offer-head__column offer-head__column--info">
+          <mj-table mj-class="offer-head__table">
+            <tr class="offer-head__tr offer-head__tr--title">
+              <td class="offer-head__td--title">
+                <img class="offer-icon__img offer-icon__img--tag" width="50" height="41" style="width:50px;height:41px;" alt="icon-tag" src="[onload;onformat=~view.formatAutoReplyIcon;iconFor=offer]" />
+              </td>
+              <td class="offer-head__td offer-head__td--info">
+                <span class="offer-head__span" style="text-transform:uppercase;">
+                  {{_offer.head.title:Spezial-Angebote}}
+                </span>
+                <h4 class="offer-head__h4--room-title">[rooms_offers.title]</h4>
+              </td>
+            </tr>
+          </mj-table>
+          <mj-text mj-class="offer-description__text">
+            <div class="offer-description__div">
+              [rooms_offers.description;strconv=no;onformat=~view.formatHtmlForMjml;bem=offer-description;view=autoreply;iconFor=offer-description-list;noerr;magnet=div]
+            </div>
+          </mj-text>
+        </mj-column>
+        <mj-column mj-class="offer-head__column offer-head__column--image">
+        <mj-table mj-class="offer-head__table">
+          <tr>
+            <td class="offer-head__td--b"><div></div></td>
+          </tr>
+        </mj-table>
+          <mj-image mj-class="offer-head__image" src="[rooms_offers.images.0.url;onformat=~view.formatSeekdaImage;width=516;height=322;noerr;magnet=mj-image;data-uri]" />
+          <mj-text mj-class="offer-rateplan-amount__text">
+            <p class="offer-rateplan-amount__p offer-rateplan-amount__p--nights">
+              <span class="offer-rateplan-amount__span offer-rateplan-amount__span--nights">
+                [enquiry.period.0.nights;if [val]=1;then '{{_period_night:1 Nacht}}';else '{{_period_nights:[val] Nächte}}']
+              </span>
+              <strong class="offer-rateplan-amount__strong">
+                [rooms_offers.price;onformat=~view.formatPrice]
+              </strong>
+            </p>
+          </mj-text>
+          <mj-button mj-class="offer-rateplan-booking__button" href="[rooms_offers.booking_url]">{{_offer.rateplan.booknow:Jetzt buchen}}</mj-button>
+        </mj-column>
+    </mj-section>
+    [rooms_offers;block=end]
+    [rooms;block=end]
+    [onload;onformat=~view.formatAutoReplyFooter;subtpl]
+    <mj-section mj-class="bottom__section">
+      <mj-column mj-class="bottom__column">
+        <mj-text mj-class="bottom__text">
+          {{_bottom.request_no:Anfrage Nr. R}}[info.no] {{_bottom.request_from:vom}} [info.sent;frm='{{_bottom.request_dateformat:dd.mm.YYYY hh:nn:ss}}']
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

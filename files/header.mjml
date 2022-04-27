@@ -1,0 +1,9 @@
+<mj-section mj-class="header__section" background-url="[hotel.info.marketing.images.0.url;onformat=~view.formatSeekdaImage;width=880;height=270;noerr;data-uri]">
+    <mj-column mj-class="header-title__column">
+      <mj-text mj-class="header-title__text">
+        <p class="header-title__p">
+          <img class="header-title__img" src="[onshow;imageUrl='[USER_LESS_ROOT]img/autoreply_header.png';onformat=~view.formatEmbedImage;noerr;magnet=mj-image]" />
+        </p>
+      </mj-text>
+    </mj-column>
+  </mj-section>
