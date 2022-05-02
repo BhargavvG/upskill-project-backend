@@ -23,6 +23,19 @@ module.exports = class ChannelDomain {
       res.status(500).send(err.message);
     }
   }
+
+  async getChannels(req, res) {
+    let { subscribedChannels } = req.body;
+
+    try {
+      let channels = await ChannelModel.find({
+        id: { $in: subscribedChannels },
+      });
+      res.send(channels);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
   async addChannel(req, res) {
     try {
       let channel = new ChannelModel(req.body);

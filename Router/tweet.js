@@ -5,6 +5,8 @@ let tweet = new TweetDomain();
 
 router
   .get("/", tweet.getAllTweets)
+  .get("/byUsers", tweet.getTweetByUser)
+  .post("/byChannels", tweet.getTweetByChannels)
   .post("/", tweet.addTweet)
   .get("/:id", tweet.getTweetById)
   .put("/:id", tweet.updateTweet)

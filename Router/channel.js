@@ -5,6 +5,7 @@ let channel = new ChannelDomain();
 
 router
   .get("/", channel.getAllChannels)
+  .post("/get", channel.getChannels)
   .post("/", channel.addChannel)
   .get("/:id", channel.getChannelById)
   .put("/:id", channel.updateChannel)

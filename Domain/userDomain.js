@@ -91,9 +91,33 @@ module.exports = class UserDomain {
       );
       console.log(result);
       if (result.acknowledge == 0) {
-        res.send("User not found");
+        res.status(204).send("User not found");
       } else {
         res.send("User updated successfully");
+      }
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+
+  // save tweet for later
+  async saveTweet(req, res) {
+    const userId = req.decoded.id;
+    try {
+      const { id } = req.body;
+      const result = await UserModel.updateOne(
+        { id: userId },
+        {
+          savedTweets: {
+            $push: id,
+          },
+        }
+      );
+      console.log(result);
+      if (result.acknowledge == 0) {
+        res.status(204).send("unable to find tweet/user");
+      } else {
+        res.send("Tweet Added");
       }
     } catch (err) {
       res.status(500).send(err.message);

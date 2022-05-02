@@ -38,6 +38,28 @@ module.exports = class TweetDomain {
       res.status(500).send(err.message);
     }
   }
+  async getTweetByUser(req, res) {
+    try {
+      let tweets = await TweetModel.find({ user: req.decoded.id });
+      res.send(tweets);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send(err.message);
+    }
+  }
+  async getTweetByChannels(req, res) {
+    let { selectedChannels } = req.body;
+    console.log(selectedChannels);
+    try {
+      let tweets = await TweetModel.find({
+        channels: { $in: selectedChannels },
+      });
+      res.send(tweets);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send(err.message);
+    }
+  }
   async addTweet(req, res) {
     try {
       let tweet = new TweetModel(req.body);
