@@ -1,0 +1,26 @@
+[{
+  "_id": {
+    "$oid": "6260fe64cb0d978357411943"
+  },
+  "name": "John Doe",
+  "email": "email@gmail.com",
+  "contactNumber": 9909009090,
+  "dob": {
+    "$date": "1992-02-01T18:30:00Z"
+  },
+  "password": "$2b$10$M50OTBd7cH3kLn.J74bFiudLRC7UzIGglAIp5/b9ACAYYn61K2Dm2",
+  "status": false,
+  "createdOn": {
+    "$date": "2022-04-21T06:48:00.607Z"
+  },
+  "id": 107,
+  "__v": 0,
+  "role": "user",
+  "userName": "john_doe",
+  "channels": [
+    1100,
+    1101,
+    1102,
+    1103
+  ]
+}]

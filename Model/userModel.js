@@ -33,6 +33,9 @@ const UserModel = mongoose.model(
     channels: {
       type: Array,
     },
+    savedTweets:{
+      type: Array,
+    },
     userName: {
       type: String,
       unique: true,

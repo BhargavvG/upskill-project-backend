@@ -1,0 +1,74 @@
+[{
+  "_id": {
+    "$oid": "6267d65c147c2aa269cf9e2d"
+  },
+  "msg": "Dummy Tweet",
+  "user": 107,
+  "likes": [
+    107
+  ],
+  "createdOn": {
+    "$date": "2022-04-26T11:23:24.903Z"
+  },
+  "channels": [
+    1100,
+    1101,
+    1102
+  ],
+  "status": false,
+  "id": 10010,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6267d663147c2aa269cf9e30"
+  },
+  "msg": "temp Tweet",
+  "user": 107,
+  "likes": [],
+  "createdOn": {
+    "$date": "2022-04-26T11:23:24.903Z"
+  },
+  "channels": [
+    1100,
+    1101
+  ],
+  "status": false,
+  "id": 10011,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6267d66f147c2aa269cf9e33"
+  },
+  "msg": "temp Tweet",
+  "user": 107,
+  "likes": [
+    107
+  ],
+  "createdOn": {
+    "$date": "2022-04-26T11:23:24.903Z"
+  },
+  "channels": [
+    1102
+  ],
+  "status": false,
+  "id": 10012,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6267d9db147c2aa269cf9e55"
+  },
+  "msg": "demo Tweet",
+  "user": 107,
+  "likes": [
+    107
+  ],
+  "createdOn": {
+    "$date": "2022-04-26T11:23:24.903Z"
+  },
+  "channels": [
+    1103
+  ],
+  "status": false,
+  "id": 10013,
+  "__v": 0
+}]

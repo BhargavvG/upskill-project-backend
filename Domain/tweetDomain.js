@@ -49,11 +49,25 @@ module.exports = class TweetDomain {
   }
   async getTweetByChannels(req, res) {
     let { selectedChannels } = req.body;
-    console.log(selectedChannels);
+    // console.log(selectedChannels);
     try {
-      let tweets = await TweetModel.find({
-        channels: { $in: selectedChannels },
-      });
+      let tweets = await TweetModel.aggregate([
+        { $match: { channels: { $in: selectedChannels } } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "user",
+            foreignField: "id",
+            as: "user",
+          },
+        },
+        { $unwind: "$user" },
+        {
+          $project: {
+            "user.password": false,
+          },
+        },
+      ]);
       res.send(tweets);
     } catch (err) {
       console.log(err.message);

@@ -105,16 +105,22 @@ module.exports = class UserDomain {
     const userId = req.decoded.id;
     try {
       const { id } = req.body;
+
+      const user = await UserModel.findOne({ id: userId });
+      let savedTweets = user?.savedTweets;
+
+      if (user && user.savedTweets.includes(id)) {
+        savedTweets = savedTweets.filter((x) => x !== id);
+      } else savedTweets?.push(id);
+      console.log(id);
       const result = await UserModel.updateOne(
         { id: userId },
         {
-          savedTweets: {
-            $push: id,
-          },
+          savedTweets: savedTweets,
         }
       );
       console.log(result);
-      if (result.acknowledge == 0) {
+      if (result.acknowledge == 0 || !user) {
         res.status(204).send("unable to find tweet/user");
       } else {
         res.send("Tweet Added");
