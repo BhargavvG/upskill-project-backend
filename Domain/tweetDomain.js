@@ -4,6 +4,7 @@ module.exports = class TweetDomain {
   async getAllTweets(req, res) {
     try {
       let tweets = await TweetModel.aggregate([
+        {$match: { status:true}},
         {
           $lookup: {
             from: "users",
@@ -26,7 +27,7 @@ module.exports = class TweetDomain {
   }
   async getTweetById(req, res) {
     try {
-      let tweet = await TweetModel.findOne({ id: req.params.id });
+      let tweet = await TweetModel.findOne({ id: req.params.id, status:true });
 
       if (tweet.length == 0) {
         res.send(tweet);
@@ -40,7 +41,23 @@ module.exports = class TweetDomain {
   }
   async getTweetByUser(req, res) {
     try {
-      let tweets = await TweetModel.find({ user: req.decoded.id });
+      let tweets = await TweetModel.aggregate([
+        { $match: { user: req.decoded.id, status:true } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "user",
+            foreignField: "id",
+            as: "user",
+          },
+        },
+        { $unwind: "$user" },
+        {
+          $project: {
+            "user.password": false,
+          },
+        },
+      ]);
       res.send(tweets);
     } catch (err) {
       console.log(err.message);
@@ -52,7 +69,7 @@ module.exports = class TweetDomain {
     // console.log(selectedChannels);
     try {
       let tweets = await TweetModel.aggregate([
-        { $match: { channels: { $in: selectedChannels } } },
+        { $match: { channels: { $in: selectedChannels }, status:true } },
         {
           $lookup: {
             from: "users",
@@ -85,11 +102,13 @@ module.exports = class TweetDomain {
   }
   async updateTweet(req, res) {
     try {
+      let id = req.params.id;
       let result = await TweetModel.updateOne(
         { id: id },
         { $set: { ...req.body } }
       );
-      if (result.acknowledge == 0) {
+      console.log(result)
+      if (result?.acknowledged) {
         res.send("Updated Successfully");
       } else {
         res.send("Didn't find such tweet");
@@ -100,11 +119,12 @@ module.exports = class TweetDomain {
   }
   async deleteTweet(req, res) {
     try {
+      let id = req.params.id;
       let result = await TweetModel.updateOne(
         { id: id },
         { $set: { status: false } }
       );
-      if (result.acknowledge == 0) {
+      if (result.acknowledged) {
         res.send("Deleted Successfully");
       } else {
         res.send("Didn't find such tweet");

@@ -146,6 +146,22 @@ module.exports = class UserDomain {
     }
   }
 
+  async getSavedTweets (req, res){
+    const userId = req.decoded.id;
+    const tweets = await UserModel.aggregate(
+      {$match: { id:userId } },
+      {
+        $lookup: {
+          from: "tweets",
+          localField: "savedTweets",
+          foreignField: "id",
+          as: "tweets",
+        },
+      },
+      { $unwind: "$tweets" },
+    )
+  }
+
   // update password
   async updatePassword(req, res) {
     const id = req.params.id;

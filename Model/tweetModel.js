@@ -31,7 +31,7 @@ const TweetModel = mongoose.model(
     },
     status: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   }).plugin(autoIncrement.plugin, {
     model: "tweets",

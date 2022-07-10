@@ -9,8 +9,8 @@ router
   .post("/byChannels", tweet.getTweetByChannels)
   .post("/", tweet.addTweet)
   .get("/:id", tweet.getTweetById)
-  .put("/:id", tweet.updateTweet)
-  .delete("/:id", tweet.deleteTweet)
+  .put("/update/:id", tweet.updateTweet)
+  .delete("/delete/:id", tweet.deleteTweet)
   .post("/like/:id", tweet.likeTweet);
 
 module.exports = router;

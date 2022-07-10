@@ -12,6 +12,7 @@ router
   .get("/profile", user.getUserProfile)
   .put("/profile/update", user.updateUser)
   .put("/profile/updatepassword", user.updatePassword)
+  .get("/savedTweets", user.getSavedTweets)
   .post("/save", user.saveTweet)
   .use(authAdmin)
   .get("/profile/all", user.getAllUsers)

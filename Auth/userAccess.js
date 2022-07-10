@@ -7,7 +7,7 @@ router.use((req, res, next) => {
   } else {
     res.status(401).json({
       Error: "Permission Denied",
-      Error_Message: "You are not an Admin!",
+      Error_Message: "Authorization failed!",
     });
   }
 });
